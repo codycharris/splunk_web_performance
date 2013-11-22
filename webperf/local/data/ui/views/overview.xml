@@ -1,0 +1,44 @@
+<dashboard stylesheet="application.css">
+  <label>Overview</label>
+  <label>Help</label>
+  <row>
+    <single>
+      <title>Events Captured (Last 24 hours)</title>
+      <searchString>sourcetype="rum" | stats count AS events | eval change=22.5 | eval percent=72.5</searchString>
+      <earliestTime>rt-24h</earliestTime>
+      <latestTime>rtnow</latestTime>
+      <option name="afterLabel">Events</option>
+      <option name="linkView">search</option>
+      <option name="changeField">change</option>
+      <option name="changeFieldType">percent</option>
+    </single>
+    <single>
+      <title>Events Captured Per Second</title>
+      <searchPostProcess>| eval eps = round(events/60, 2) | fields eps</searchPostProcess>
+      <!--<searchString>sourcetype="rum" | stats count AS epm | eval eps = round(epm/60, 2) | fields eps | rangemap field=eps none=0-99 low=100-199 guarded=200-299 elevated=300-399 high=400-499 severe=500-599 default=none</searchString>-->
+      <option name="linkView">search</option>
+      <option name="afterLabel">EPS</option>
+      <option name="changeField">change</option>
+      <option name="changeFieldType">percent</option>
+    </single>
+  </row>
+  <row>
+    <table>
+      <title>Events by Domain</title>
+      <searchString>sourcetype="rum" | chart count as "Measurements" sparkline by u_host | rename u_host as Domain | sort -count</searchString>
+      <earliestTime>0</earliestTime>
+      <latestTime>now</latestTime>
+      <option name="wrap">true</option>
+      <option name="rowNumbers">false</option>
+      <option name="dataOverlayMode">none</option>
+      <option name="drilldown">row</option>
+      <option name="count">10</option>
+      <drilldown>
+        <link>/app/webperf/hist_perf_overview?form.uHost=$row.Domain$</link>
+      </drilldown>
+    </table>
+  </row>
+  <row>
+    <html src="docs/overview.html"/>
+  </row>
+</dashboard>

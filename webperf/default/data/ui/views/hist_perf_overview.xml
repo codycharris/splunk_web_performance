@@ -1,0 +1,93 @@
+<form>
+  <label>Historical Performance</label>
+  <description>Summary of key performance metrics by domain.</description>
+  <fieldset autoRun="true" submitButton="true">
+    <input type="dropdown" token="uHost">
+      <label>Domain/Host:</label>
+      <default>*</default>
+      <choice value="*">All</choice>
+      <populatingSearch fieldForValue="u_host" fieldForLabel="u_host" earliest="-30d" latest="now">
+        <![CDATA[sourcetype="rum" | stats count by u_host]]>
+      </populatingSearch>     
+    </input>
+    <input type="dropdown" token="osFamily">
+      <label>Operating System(s):</label>
+      <default>*</default>
+      <choice value="*">All</choice>
+      <populatingSearch fieldForValue="ua_raw.os.family" fieldForLabel="ua_raw.os.family" earliest="-30d" latest="now">
+        <![CDATA[sourcetype="rum" "u_host"="$uHost$" | stats count by ua_raw.os.family]]>
+      </populatingSearch>
+    </input>
+    <input type="dropdown" token="uaFamily">
+      <label>Browser(s):</label>
+      <default>*</default>
+      <choice value="*">All</choice>
+      <populatingSearch fieldForValue="ua_raw.family" fieldForLabel="ua_raw.family" earliest="-30d" latest="now">
+        <![CDATA[sourcetype="rum" "u_host"="$uHost$" "ua_raw.os.family"="$osFamily$" | stats count by ua_raw.family]]>
+      </populatingSearch>
+    </input>
+    <input type="dropdown" token="uaMajor">
+      <label>Browser Version(s):</label>
+      <default>*</default>
+      <choice value="*">All</choice>
+      <populatingSearch fieldForValue="ua_raw.ua.major" fieldForLabel="ua_raw.ua.major" earliest="-7d" latest="now">
+        <![CDATA[sourcetype="rum" "u_host"="$uHost$" "ua_raw.os.family"="$osFamily$" "ua_raw.family"="$uaFamily$"| stats count by ua_raw.ua.major]]>
+      </populatingSearch>
+    </input>    
+    <!-- time range picker -->
+    <input type="time" searchWhenChanged="true">
+      <label>Time Range:</label>
+      <default>
+        <earliestTime>-7d@d</earliestTime>
+        <latestTime>now</latestTime>
+      </default>
+    </input>
+  </fieldset>
+  <row>
+    <single>
+      <title>Avg. DNS Lookup</title>
+      <searchString>sourcetype="rum" "ua_raw.os.family"=$osFamily$ | eval dns=(nt_dns_end - nt_dns_st)*10 | stats avg(dns) as avg_dns | eval avg_dns=round(avg_dns,2) | rangemap field=avg_dns low=0-100 elevated=101-200 default=severe</searchString>
+      <earliestTime>$earliest$</earliestTime>
+      <latestTime>$latest$</latestTime>      
+    </single>
+    <single>
+      <title>Avg. Time to First Byte (TTFB)</title>
+      <searchString>sourcetype="rum" "ua_raw.os.family"=$osFamily$ | eval ttfb=t_resp/1000 | stats avg(ttfb) as "TTFB" | eval TTFB=round(TTFB,2) | rangemap field=TTFB low=0-4 elevated=5-9 default=severe</searchString>
+      <earliestTime>$earliest$</earliestTime>
+      <latestTime>$latest$</latestTime>
+      <option name="afterLabel">sec</option>    
+    </single>
+    <single>
+      <title>Avg. Page Ready</title>
+      <searchString>sourcetype="rum" "ua_raw.os.family"=$osFamily$ | eval ready=t_page/1000 | stats avg(ready) as "Ready" | eval Ready=round(Ready,2) | rangemap field=Ready low=0-4 elevated=5-9 default=severe</searchString>
+      <earliestTime>$earliest$</earliestTime>
+      <latestTime>$latest$</latestTime>
+      <option name="afterLabel">sec</option>
+      <option name="linkView">search</option>
+    </single>
+  </row>
+  <row>
+    <chart>
+      <title>Key Metrics (Mean)</title>
+      <searchString>sourcetype="rum" "ua_raw.os.family"=$osFamily$ | eval load= t_page/1000 |   eval ready=t_done/1000 |  eval ttfb=t_resp/1000 |  eval dns=(nt_dns_end-nt_dns_st)/1000 |  timechart avg(load),avg(ready),avg(ttfb),avg(dns) |  rename avg(dns) as "DNS" |  rename avg(ttfb) as "First Byte" |  rename avg(ready) as "Doc Complete" |  rename avg(load) as "Load Time"</searchString>
+      <earliestTime>$earliest$</earliestTime>
+      <latestTime>$latest$</latestTime>
+      <option name="charting.axisTitleX.visibility">visible</option>
+      <option name="charting.axisTitleY.visibility">visible</option>
+      <option name="charting.axisX.scale">linear</option>
+      <option name="charting.axisY.scale">linear</option>
+      <option name="charting.chart">area</option>
+      <option name="charting.chart.nullValueMode">gaps</option>
+      <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+      <option name="charting.chart.stackMode">default</option>
+      <option name="charting.chart.style">shiny</option>
+      <option name="charting.drilldown">all</option>
+      <option name="charting.layout.splitSeries">0</option>
+      <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+      <option name="charting.legend.placement">right</option>
+      <drilldown>
+        <link>/app/webperf/percentiles?form.metric=$click.value1$</link>
+      </drilldown>      
+    </chart>
+  </row>
+</form>

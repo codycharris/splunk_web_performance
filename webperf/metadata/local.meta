@@ -1,0 +1,80 @@
+[app/ui]
+version = 6.0
+modtime = 1382036919.815263000
+
+[app/launcher]
+version = 6.0
+modtime = 1382036919.817822000
+
+[inputs/script%3A%2F%2F%2FApplications%2FSplunk%2Fetc%2Fapps%2Fwebperf%2Fbin%2Ftest.sh]
+owner = admin
+version = 6.0
+modtime = 1382392587.925892000
+
+[views/overview]
+owner = admin
+version = 6.0
+modtime = 1385160180.924193000
+
+[views/browser_overview]
+owner = admin
+version = 6.0
+modtime = 1383332556.021017000
+
+[views/hist_perf_overview]
+access = read : [ * ], write : [ admin ]
+export = none
+owner = admin
+version = 6.0
+modtime = 1385011791.022994000
+
+[views/rt_perf_overview]
+access = read : [ * ], write : [ admin ]
+export = none
+owner = admin
+version = 6.0
+modtime = 1385008209.946938000
+
+[props/rum/EXTRACT-host]
+access = read : [ * ]
+export = none
+owner = admin
+version = 6.0
+modtime = 1384401092.798538000
+
+[views/help]
+access = read : [ * ]
+export = none
+owner = admin
+version = 6.0
+modtime = 1384977013.718176000
+
+[inputs/script%3A%2F%2F%24SPLUNK_HOME%2Fetc%2Fapps%2Fwebperf%2Fbin%2Fcollector.sh]
+owner = admin
+version = 6.0
+modtime = 1384977695.162293000
+
+[views/percentiles]
+access = read : [ * ]
+export = none
+owner = admin
+version = 6.0
+modtime = 1385144897.715085000
+
+[nav/default]
+version = 6.0
+modtime = 1385148868.094340000
+
+[views/geo_performance]
+access = read : [ * ]
+export = none
+owner = admin
+version = 6.0
+modtime = 1385012152.712966000
+
+[savedsearches/Page%20Load%20Time%20in%20Buckets]
+access = read : [ * ]
+export = none
+owner = admin
+version = 6.0
+modtime = 1385148571.986473000

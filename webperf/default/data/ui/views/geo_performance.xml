@@ -1,0 +1,20 @@
+<dashboard>
+  <label>Geographical Performance</label>
+  <description>Geographical data plotting on integrated maps.</description>
+  <row>
+    <map>
+      <title>Map with default drilldown</title>
+      <searchString>sourcetype="rum" | iplocation clientip| geostats latfield=lat longfield=lon avg(t_page),avg(t_done)</searchString>
+      <option name="height">400px</option>
+      <!-- use custom colors -->
+      <option name="mapping.seriesColors">[0x5379af,0x9ac23c,0xf7902b,0x956d95,0x6ab7c7,0xd85d3c,0xfac51c,0xdd86af]</option>
+      <!-- adjust marker opacity and size range -->
+      <option name="mapping.markerLayer.markerOpacity">0.8</option>
+      <option name="mapping.markerLayer.markerMinSize">10</option>
+      <option name="mapping.markerLayer.markerMaxSize">60</option>
+      <!-- set initial map center and zoom level -->
+      <option name="mapping.map.center">(30.810646,-10.556976)</option>
+      <option name="mapping.map.zoom">2</option>
+    </map>
+  </row>
+</dashboard>

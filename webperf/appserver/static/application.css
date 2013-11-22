@@ -1,0 +1,62 @@
+.dashboard-body {
+	background-image: url('/static/app/webperf/32.png');
+	backgtround-repeat: none;
+	background-repeat:no-repeat;
+	background-position: 125px 8px; 
+}
+.splunk-components .app-bar {
+	background-color:#554455;
+}
+.single-value:before {
+    font-family: "Splunk Icons";
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: inherit;
+    font-size: 48px;
+}
+.severe.single-value:before {
+    content: "\2297";
+    color: #ff1f24;
+}
+.high.single-value:before {
+    content: "\ECD4";
+    color: #ff7e00;
+}
+.elevated.single-value:before {
+    content: "\26A0";
+    color: #ffb800;
+}
+.low.single-value:before {
+    content: "\ECD3";
+    color: #00b932;
+}
+.guarded.single-value:before {
+    content: "\0049";
+    color: #4da6df;
+}
+.icon-only.single-value:before {
+    font-size: 65px;
+}
+.icon-only .single-result {
+    display: none;
+}
+.single-trend {
+    position: relative;
+    top: -15px;
+    text-align: center;
+    font-size: 18px;
+    color: #888;
+}
+.single-trend i {
+    font-size: 28px;
+    vertical-align: text-bottom;
+}
+.single-trend.nochange, .single-trend.nochange i {
+    font-size: 14px;
+}
+.single-trend.increase {
+    color: #65A637;
+}
+.single-trend.decrease {
+    color: #d85d3c;
+}

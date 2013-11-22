@@ -1,0 +1,74 @@
+<h1>Web Performance App Setup</h1>
+
+<p>This App uses Node.js to collect web performance data (Web Timing metrics) beaconed from <i>real</i> end users using <a href='http://yahoo.github.io/boomerang/doc/' target='_blank'>boomerang.js</a> (a client-side JavaScript library developed by Yahoo!). The data sent by Boomerang to Node is written to /var/log/rum.log by default.</p>
+<br/>
+      <ol>
+      	<li>Download &amp; install Node.js. See: <a href="http://nodejs.org/download/" target="_blank">http://nodejs.org/download/</a><br/><br/></li>
+      	<li>Test your Node installation.
+      		<pre>node $SPLUNK_HOME/etc/apps/webperf/bin/node/test.js
+Server running at http://127.0.0.1:7000</pre>
+      		Hit http://127.0.0.1:7000 in your browser. Open ports as necessary.<br/><br/>   
+      	</li>
+      	<li>Start the Node server to receive and log performance data from boomerang.js
+      		<pre>sudo node $SPLUNK_HOME/etc/apps/webperf/bin/server.js
+Server running at http://127.0.0.1:7000</pre>
+          <strong>Note: You must run server.js as root or someone with privledges to write to /var/log/</strong><br/><br/>
+      	</li>
+      	<li>Add boomerang.js to the pages you'd like to monitor:
+      		<pre>
+      BOOMR.init({
+        beacon_url: 'http://node.mydomain.com:7000',
+        site_domain: "example.com", 
+        user_ip: "{Client IP Address",
+        BW: { enabled: true,
+      	base_url: "http://base_url/to/bandwidth/images/",
+        }
+      });</pre>
+      	See: $SPLUNK_HOME/etc/apps/webperf/examples/example.html for a working example (View Soruce)<br/><br/>
+      	</li>
+      </ol>
+      <p>That's it! Data sent by boomerang.js should now be flowing into Splunk. Tail /var/log/rum.log to verify that you are receiving data.
+</p>
+
+<h3>Beacon parameters</h3>
+<p>
+The beacon that hits your server will have several parameters.  Each plugin also adds its own
+parameters, so if you have custom plugins set up, you'll get parameters from them as well.
+This is what you get from the default install:
+</p>
+
+<h4>boomerang parameters</h4>
+<dl>
+<dt>v</dt> <dd>Version number of the boomerang library in use.</dd>
+<dt>u</dt> <dd>URL of page that sends the beacon.</dd>
+</dl>
+
+<h4>roundtrip plugin parameters</h4>
+<dl>
+<dt>t_done</dt> <dd><strong>[optional]</strong> Perceived load time of the page.</dd>
+<dt>t_page</dt> <dd><strong>[optional]</strong> Time taken from the head of the page to page_ready.</dd>
+<dt>t_resp</dt> <dd><strong>[optional]</strong> Time taken from the user initiating the request to the first byte of the response.</dd>
+<dt>t_other</dt> <dd><strong>[optional]</strong> Comma separated list of additional timers set by page developer.  Each timer is of the format <code>name|value</code>.  The following timers may be included:
+<dl>
+	<dt>t_load</dt> <dd><strong>[optional]</strong> If the page were prerendered, this is the time to fetch and prerender the page.</dd>
+	<dt>t_prerender</dt> <dd><strong>[optional]</strong> If the page were prerendered, this is the time from start of prefetch to the actual page display.  It may only be useful for debugging.</dd>
+	<dt>t_postrender</dt> <dd><strong>[optional]</strong> If the page were prerendered, this is the time from prerender finish to actual page display.  It may only be useful for debugging.</dd>
+	<dt>boomerang</dt> <dd>The time it took boomerang to load up from first byte to last byte</dd>
+	<dt>boomr_fb</dt> <dd><strong>[optional</strong> The time it took from the start of page load to the first byte of boomerang.  Only included if we know when page load started.</dd>
+</dl></dd>
+<dt>r</dt> <dd>URL of page that set the start time of the beacon.</dd>
+<dt>r2</dt> <dd><strong>[optional]</strong> URL of referrer of current page.  Only set if different from <code>r</code> and <code>strict_referrer</code> has been explicitly turned off.</dd>
+<dt>rt.start</dt> <dd>Specifies where the start time came from.  May be one of <code>cookie</code> for the start cookie, <code>navigation</code> for the W3C navigation timing API, <code>csi</code> for older versions of Chrome or <code>gtb</code> for the Google Toolbar.</dd>
+<dt>rt.bstart</dt> <dd>The timestamp when boomerang showed up on the page</dd>
+<dt>rt.end</dt> <dd>The timestamp when the done() method was called</dd>
+</dl>
+
+<h4>bandwidth &amp; latency plugin</h4>
+<dl>
+<dt>bw</dt> <dd>User's measured bandwidth in bytes per second</dd>
+<dt>bw_err</dt> <dd>95% confidence interval margin of error in measuring user's bandwidth</dd>
+<dt>lat</dt> <dd>User's measured HTTP latency in milliseconds</dd>
+<dt>lat_err</dt> <dd>95% confidence interval margin of error in measuring user's latency</dd>
+<dt>bw_time</dt> <dd>Timestamp (seconds since the epoch) on the user's browser when the bandwidth and latency was measured</dd>
+</dl>
+
