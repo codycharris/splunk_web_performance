@@ -1,8 +1,4 @@
-Web Performance App for Splunk
-===
-
-
-# App Setup
+## Web Performance App for Splunk
 
 This App uses Node.js to collect web performance data (Web Timing metrics) beaconed from real end users using [boomerang.js](https://github.com/yahoo/boomerang) (a client-side JavaScript library developed by Yahoo!). The data sent by Boomerang to Node is written to /var/log/rum.log by default.
 
@@ -11,14 +7,14 @@ This App uses Node.js to collect web performance data (Web Timing metrics) beaco
 
 ---
 
-## Test your Node installation.
+### Test your Node installation.
 
     node $SPLUNK_HOME/etc/apps/webperf/bin/node/test.js
     Server running at http://127.0.0.1:7000
 
 Hit http://127.0.0.1:7000 in your browser. Open ports as necessary.
 
-## Start the Node server to receive and log performance data from boomerang.js
+### Start the Node server to receive and log performance data from boomerang.js
 
     sudo node $SPLUNK_HOME/etc/apps/webperf/bin/server.js
     Server running at http://127.0.0.1:7000
@@ -26,7 +22,7 @@ Hit http://127.0.0.1:7000 in your browser. Open ports as necessary.
 *Note: You must run server.js as root or someone with privledges to write to /var/log/*
 
 
-### Add boomerang.js to the pages you'd like to monitor:
+#### Add boomerang.js to the pages you'd like to monitor:
 
     BOOMR.init({
       beacon_url: 'http://node.mydomain.com:7000',
@@ -43,7 +39,7 @@ Hit http://127.0.0.1:7000 in your browser. Open ports as necessary.
 That's it! Data sent by boomerang.js should now be flowing into Splunk. Tail /var/log/rum.log to verify that you are receiving data.
 
 ----------
-## Generating Sample Data:
+### Generating Sample Data:
 
 To generate fake sample data, similar to that beaconed back by boomarang (that's a mouth full), use the data_gen.js node script.
 
@@ -55,12 +51,12 @@ To generate fake sample data, similar to that beaconed back by boomarang (that's
 The beacon that sent to your server will contain several parameters. Each boomerang plugin also adds its own set of parameters.
 
 
-#### Default boomerang parameters
+##### Default boomerang parameters
 
  - v : Version number of the boomerang library in use.
  - u : URL of page that sends the beacon.
 
-#### Roundtrip plugin parameters
+##### Roundtrip plugin parameters
 
  - t_done [optional] Perceived load time of the page.
  - t_page [optional] Time taken from the head of the page to page_ready.
