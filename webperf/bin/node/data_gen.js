@@ -4,8 +4,8 @@ var url  = require('url');
 var winston = require('winston');
 
 // Configure Winston (Logging)
-winston.add(winston.transports.File, { filename: '/var/log/rum.log', json: false, maxsize: 1024, maxFiles: 10 });
-//winston.remove(winston.transports.Console);
+winston.add(winston.transports.File, { filename: '/var/log/rum.log', json: false});
+winston.remove(winston.transports.Console);
 
 // Sleep function for JS
 function sleep(milliseconds) {
@@ -39,7 +39,9 @@ ua_family[2] = 'Safari';
 ua_raw[3] = 'Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)';
 ua_family[3] = 'IE';
 
-for (var i = 0; i < max; i++) {
+console.log("Generating sample data... please wait.");
+
+while (var i = 0; i < max; i++) {
     var now = new Date().getTime();
     var random = Math.floor((Math.random() * 1000) + 100);
     var random_ua = Math.floor((Math.random() * 9) % 2);
@@ -133,7 +135,7 @@ for (var i = 0; i < max; i++) {
 
     var string = JSON.stringify(obj);
     winston.log('info', string);
-    sleep(1000);
+    sleep(100);
 }
 // Put a friendly message on the terminal
 console.log("Done");

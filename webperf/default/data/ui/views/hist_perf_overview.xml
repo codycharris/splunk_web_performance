@@ -6,15 +6,15 @@
       <label>Domain/Host:</label>
       <default>*</default>
       <choice value="*">All</choice>
-      <populatingSearch fieldForValue="u_host" fieldForLabel="u_host" earliest="-30d" latest="now">
+      <populatingSearch fieldForValue="u_host" fieldForLabel="u_host" earliest="-7d" latest="now">
         <![CDATA[sourcetype="rum" | stats count by u_host]]>
-      </populatingSearch>     
+      </populatingSearch>
     </input>
     <input type="dropdown" token="osFamily">
       <label>Operating System(s):</label>
       <default>*</default>
       <choice value="*">All</choice>
-      <populatingSearch fieldForValue="ua_raw.os.family" fieldForLabel="ua_raw.os.family" earliest="-30d" latest="now">
+      <populatingSearch fieldForValue="ua_raw.os.family" fieldForLabel="ua_raw.os.family" earliest="-7d" latest="now">
         <![CDATA[sourcetype="rum" "u_host"="$uHost$" | stats count by ua_raw.os.family]]>
       </populatingSearch>
     </input>
@@ -22,7 +22,7 @@
       <label>Browser(s):</label>
       <default>*</default>
       <choice value="*">All</choice>
-      <populatingSearch fieldForValue="ua_raw.family" fieldForLabel="ua_raw.family" earliest="-30d" latest="now">
+      <populatingSearch fieldForValue="ua_raw.family" fieldForLabel="ua_raw.family" earliest="-7d" latest="now">
         <![CDATA[sourcetype="rum" "u_host"="$uHost$" "ua_raw.os.family"="$osFamily$" | stats count by ua_raw.family]]>
       </populatingSearch>
     </input>
@@ -33,7 +33,7 @@
       <populatingSearch fieldForValue="ua_raw.ua.major" fieldForLabel="ua_raw.ua.major" earliest="-7d" latest="now">
         <![CDATA[sourcetype="rum" "u_host"="$uHost$" "ua_raw.os.family"="$osFamily$" "ua_raw.family"="$uaFamily$"| stats count by ua_raw.ua.major]]>
       </populatingSearch>
-    </input>    
+    </input>
     <!-- time range picker -->
     <input type="time" searchWhenChanged="true">
       <label>Time Range:</label>
@@ -46,24 +46,35 @@
   <row>
     <single>
       <title>Avg. DNS Lookup</title>
-      <searchString>sourcetype="rum" "ua_raw.os.family"=$osFamily$ | eval dns=(nt_dns_end - nt_dns_st)*10 | stats avg(dns) as avg_dns | eval avg_dns=round(avg_dns,2) | rangemap field=avg_dns low=0-100 elevated=101-200 default=severe</searchString>
-      <earliestTime>$earliest$</earliestTime>
-      <latestTime>$latest$</latestTime>      
-    </single>
-    <single>
-      <title>Avg. Time to First Byte (TTFB)</title>
-      <searchString>sourcetype="rum" "ua_raw.os.family"=$osFamily$ | eval ttfb=t_resp/1000 | stats avg(ttfb) as "TTFB" | eval TTFB=round(TTFB,2) | rangemap field=TTFB low=0-4 elevated=5-9 default=severe</searchString>
+      <searchString>sourcetype="rum" "u_host"="$uHost$" "ua_raw.os.family"="$osFamily$" "ua_raw.family"="$uaFamily$"  | eval dns=(nt_dns_end - nt_dns_st)*10 | stats avg(dns) as avg_dns | eval avg_dns=round(avg_dns,2) | rangemap field=avg_dns low=0-100 elevated=101-200 default=severe</searchString>
       <earliestTime>$earliest$</earliestTime>
       <latestTime>$latest$</latestTime>
-      <option name="afterLabel">sec</option>    
+      <option name="linkView">search</option>
+      <option name="afterLabel">ms</option>
     </single>
     <single>
-      <title>Avg. Page Ready</title>
-      <searchString>sourcetype="rum" "ua_raw.os.family"=$osFamily$ | eval ready=t_page/1000 | stats avg(ready) as "Ready" | eval Ready=round(Ready,2) | rangemap field=Ready low=0-4 elevated=5-9 default=severe</searchString>
+      <title>Avg. Time to First Byte</title>
+      <searchString>sourcetype="rum" "u_host"="$uHost$" "ua_raw.os.family"="$osFamily$" "ua_raw.family"="$uaFamily$"  | eval ttfb=t_resp/1000 | stats avg(ttfb) as "TTFB" | eval TTFB=round(TTFB,2) | rangemap field=TTFB low=0-4 elevated=5-9 default=severe</searchString>
       <earliestTime>$earliest$</earliestTime>
       <latestTime>$latest$</latestTime>
       <option name="afterLabel">sec</option>
       <option name="linkView">search</option>
+    </single>
+    <single>
+      <title>Avg. Page Ready</title>
+      <searchString>sourcetype="rum" "u_host"="$uHost$" "ua_raw.os.family"="$osFamily$" "ua_raw.family"="$uaFamily$"  | eval ready=t_page/1000 | stats avg(ready) as "Ready" | eval Ready=round(Ready,2) | rangemap field=Ready low=0-4 elevated=5-9 default=severe</searchString>
+      <earliestTime>$earliest$</earliestTime>
+      <latestTime>$latest$</latestTime>
+      <option name="afterLabel">sec</option>
+      <option name="linkView">search</option>
+    </single>
+    <single>
+      <title>Avg. Page Load</title>
+      <searchString>sourcetype="rum" "u_host"="$uHost$" "ua_raw.os.family"="$osFamily$" "ua_raw.family"="$uaFamily$" | eval ready=t_done/1000 | stats avg(ready) as "Done"  | eval Done=round(Done,2)</searchString>
+      <earliestTime>$earliest$</earliestTime>
+      <latestTime>$latest$</latestTime>
+      <option name="linkView">search</option>
+      <option name="afterLabel">sec</option>
     </single>
   </row>
   <row>
@@ -87,7 +98,7 @@
       <option name="charting.legend.placement">right</option>
       <drilldown>
         <link>/app/webperf/percentiles?form.metric=$click.value1$</link>
-      </drilldown>      
+      </drilldown>
     </chart>
   </row>
 </form>

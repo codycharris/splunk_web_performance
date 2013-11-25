@@ -19,21 +19,21 @@ modtime = 1385160180.924193000
 [views/browser_overview]
 owner = admin
 version = 6.0
-modtime = 1383332556.021017000
+modtime = 1385407261.409813000
 
 [views/hist_perf_overview]
 access = read : [ * ], write : [ admin ]
 export = none
 owner = admin
 version = 6.0
-modtime = 1385011791.022994000
+modtime = 1385170081.733828000
 
 [views/rt_perf_overview]
 access = read : [ * ], write : [ admin ]
 export = none
 owner = admin
 version = 6.0
-modtime = 1385008209.946938000
+modtime = 1385169221.094298000
 
 [props/rum/EXTRACT-host]
 access = read : [ * ]
@@ -70,11 +70,18 @@ access = read : [ * ]
 export = none
 owner = admin
 version = 6.0
-modtime = 1385012152.712966000
+modtime = 1385170570.235197000
 
 [savedsearches/Page%20Load%20Time%20in%20Buckets]
 access = read : [ * ]
 export = none
 owner = admin
 version = 6.0
-modtime = 1385148571.986473000
+modtime = 1385408750.925501000
+
+[savedsearches/Dom%20Complete%20in%20Buckets]
+access = read : [ * ]
+export = none
+owner = admin
+version = 6.0
+modtime = 1385408707.683534000

@@ -2,10 +2,10 @@
   <label>Browser Overview</label>
   <row>
     <table>
-      <title>Browser performance by OS</title>
+      <title>Browser Performance by OS (Last 7 Days)</title>
       <searchString>sourcetype="rum" | chart avg(t_page) AS "Page Load", avg(t_resp) as "TTFB" over ua_raw.os.family by ua_raw.family | rename ua_raw.os.family AS "OS"</searchString>
-      <earliestTime>0</earliestTime>
-      <latestTime>$latest$</latestTime>
+      <earliestTime>-7d@h</earliestTime>
+      <latestTime>now</latestTime>
       <option name="wrap">true</option>
       <option name="rowNumbers">false</option>
       <option name="dataOverlayMode">none</option>

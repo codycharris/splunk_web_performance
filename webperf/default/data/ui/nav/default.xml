@@ -1,25 +1,16 @@
 <nav color="#554455">
   <view name="overview" default='true' />
   <collection label="Dashdboards">
-    <view name="tr_perf_overview" />
+    <view name="rt_perf_overview" />
     <view name="hist_perf_overview" />
     <view name="browser_overview" />
-    <view name="geo_performance_map" />
+    <view name="geo_performance" />
   </collection>
   <collection label="Reports">
+	<saved name="Dom Complete in Buckets" />
 	<saved name="Page Load Time in Buckets" />
   </collection>
   <view name="data_models" />
   <view name="search" />
   <view name="help" />
 </nav>
-
-<!-- 
-<nav search_view="search" color="#65A637">
-  <view name="search" default='true' />
-  <view name="data_models" />
-  <view name="reports" />
-  <view name="alerts" />
-  <view name="dashboards" />
-</nav>
--->

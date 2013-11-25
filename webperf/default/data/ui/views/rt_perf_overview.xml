@@ -6,7 +6,7 @@
       <label>Domain/Host:</label>
       <default>*</default>
       <choice value="*">All</choice>
-      <populatingSearch fieldForValue="u_host" fieldForLabel="u_host" earliest="-30d" latest="now">
+      <populatingSearch fieldForValue="u_host" fieldForLabel="u_host" earliest="-1m" latest="now">
         <![CDATA[sourcetype="rum" | stats count by u_host]]>
       </populatingSearch>
     </input>
@@ -14,7 +14,7 @@
       <label>Operating System(s):</label>
       <default>*</default>
       <choice value="*">All</choice>
-      <populatingSearch fieldForValue="ua_raw.os.family" fieldForLabel="ua_raw.os.family" earliest="-30d" latest="now">
+      <populatingSearch fieldForValue="ua_raw.os.family" fieldForLabel="ua_raw.os.family" earliest="-1m" latest="now">
         <![CDATA[sourcetype="rum" "u_host"="$uHost$" | stats count by ua_raw.os.family]]>
       </populatingSearch>
     </input>
@@ -22,7 +22,7 @@
       <label>Browser(s):</label>
       <default>*</default>
       <choice value="*">All</choice>
-      <populatingSearch fieldForValue="ua_raw.family" fieldForLabel="ua_raw.family" earliest="-30d" latest="now">
+      <populatingSearch fieldForValue="ua_raw.family" fieldForLabel="ua_raw.family" earliest="-1m" latest="now">
         <![CDATA[sourcetype="rum" "u_host"="$uHost$" "ua_raw.os.family"="$osFamily$" | stats count by ua_raw.family]]>
       </populatingSearch>
     </input>
@@ -30,7 +30,7 @@
       <label>Browser Version(s):</label>
       <default>*</default>
       <choice value="*">All</choice>
-      <populatingSearch fieldForValue="ua_raw.ua.major" fieldForLabel="ua_raw.ua.major" earliest="-7d" latest="now">
+      <populatingSearch fieldForValue="ua_raw.ua.major" fieldForLabel="ua_raw.ua.major" earliest="-1m" latest="now">
         <![CDATA[sourcetype="rum" "u_host"="$uHost$" "ua_raw.os.family"="$osFamily$" "ua_raw.family"="$uaFamily$"| stats count by ua_raw.ua.major]]>
       </populatingSearch>
     </input>

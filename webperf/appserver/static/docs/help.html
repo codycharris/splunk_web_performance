@@ -29,21 +29,26 @@ Server running at http://127.0.0.1:7000</pre>
       </ol>
       <p>That's it! Data sent by boomerang.js should now be flowing into Splunk. Tail /var/log/rum.log to verify that you are receiving data.
 </p>
+<hr/>
+<h2>Generating Sample Data:</h2>
+<p>To generate fake sample data, similar to that beaconed back by boomarang (that's a mouth full), use the data_gen.js node script.</p>
+<pre>node $SPLUNK_HOME/etc/apps/webperf/bin/node/data_gen.js</pre>
+Note: This will create ~1 event/second for example.com until it reaches 1,000 events. 
 
-<h3>Beacon parameters</h3>
+<hr/>
+<h2>Boomerang Beacon Parameters:</h2>
 <p>
-The beacon that hits your server will have several parameters.  Each plugin also adds its own
-parameters, so if you have custom plugins set up, you'll get parameters from them as well.
-This is what you get from the default install:
+The beacon that sent to your server will contain several parameters.  Each boomerang plugin also adds its own set of 
+parameters. 
 </p>
-
-<h4>boomerang parameters</h4>
+<br/>
+<h4>Default boomerang parameters</h4>
 <dl>
 <dt>v</dt> <dd>Version number of the boomerang library in use.</dd>
 <dt>u</dt> <dd>URL of page that sends the beacon.</dd>
 </dl>
 
-<h4>roundtrip plugin parameters</h4>
+<h4>Roundtrip plugin parameters</h4>
 <dl>
 <dt>t_done</dt> <dd><strong>[optional]</strong> Perceived load time of the page.</dd>
 <dt>t_page</dt> <dd><strong>[optional]</strong> Time taken from the head of the page to page_ready.</dd>
@@ -63,7 +68,7 @@ This is what you get from the default install:
 <dt>rt.end</dt> <dd>The timestamp when the done() method was called</dd>
 </dl>
 
-<h4>bandwidth &amp; latency plugin</h4>
+<h4>Bandwidth &amp; latency plugin</h4>
 <dl>
 <dt>bw</dt> <dd>User's measured bandwidth in bytes per second</dd>
 <dt>bw_err</dt> <dd>95% confidence interval margin of error in measuring user's bandwidth</dd>
@@ -71,4 +76,50 @@ This is what you get from the default install:
 <dt>lat_err</dt> <dd>95% confidence interval margin of error in measuring user's latency</dd>
 <dt>bw_time</dt> <dd>Timestamp (seconds since the epoch) on the user's browser when the bandwidth and latency was measured</dd>
 </dl>
+<p>Source: <a href="http://lognormal.github.io/boomerang/doc/howtos/howto-0.html">http://lognormal.github.io/boomerang/</a>
 
+<h2>Example Beacon:</h2>
+<p>Below is an example of the beaconed paramaters with the bandwidth &amp; latency and navigation timing plugins enabled converted to JSON.</p>
+<pre>
+{
+	"v":"0.9",
+	"u":"file://localhost/Applications/Splunk/etc/apps/webperf/examples/example.html",
+	"rt.start":"navigation",
+	"rt.bstart":"1384457297300",
+	"rt.end":"1384457297303",
+	"t_done":"13",
+	"t_resp":"0",
+	"t_page":"13",
+	"r":"",
+	"t_other":"boomerang|2,boomr_fb|10",
+	"nt_red_cnt":"0",
+	"nt_nav_type":"1",
+	"nt_nav_st":"1384457297290",
+	"nt_red_st":"0",
+	"nt_red_end":"0",
+	"nt_fet_st":"1384457297290",
+	"nt_dns_st":"1384457297290",
+	"nt_dns_end":"1384457297290",
+	"nt_con_st":"1384457297290",
+	"nt_con_end":"1384457297290",
+	"nt_req_st":"1384457297290",
+	"nt_res_st":"1384457297290",
+	"nt_res_end":"1384457297290",
+	"nt_domloading":"1384457297295",
+	"nt_domint":"1384457297302",
+	"nt_domcontloaded_st":"1384457297302",
+	"nt_domcontloaded_end":"1384457297302",
+	"nt_domcomp":"1384457297303",
+	"nt_load_st":"1384457297303",
+	"nt_load_end":"0",
+	"nt_unload_st":"1384457297291",
+	"nt_unload_end":"1384457297291",
+	"bw":"NaN",
+	"bw_err":"NaN",
+	"lat":"24",
+	"lat_err":"0.84",
+	"bw_time":"1384457298",
+	"ua_raw":{"string":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/30.0.1599.101 Safari/537.36",
+	"clientip":"127.0.0.1"
+}
+</pre>
