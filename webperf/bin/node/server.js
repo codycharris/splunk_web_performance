@@ -5,8 +5,8 @@ var winston = require('winston');
 var ua_parser = require('ua-parser');
 
 // Configure Winston (Logging)
-//winston.add(winston.transports.File, { filename: '/var/log/rum.log', json: false, timestamp: false });
-//winston.remove(winston.transports.Console);
+winston.add(winston.transports.File, { filename: '/var/log/rum.log', json: false, timestamp: false });
+winston.remove(winston.transports.Console);
 
 // Configure our HTTP server to respond with Hello World to all requests.
 var server = http.createServer(function (request, response) {
@@ -38,4 +38,4 @@ function getClientIp(request){
 server.listen(7000);
 
 // Put a friendly message on the terminal
-// console.log("Server running at http://127.0.0.1:7000/");
+console.log("Server running at http://127.0.0.1:7000/");

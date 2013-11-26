@@ -13,4 +13,4 @@
 #   limitations under the License.
 ##############################################################################
 
-node ./node/data_gen.js 
+node ./node/server.js 
