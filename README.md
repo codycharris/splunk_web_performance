@@ -16,7 +16,7 @@ Hit http://127.0.0.1:7000 in your browser. Open ports as necessary.
 
 ### Start the Node server to receive and log performance data from boomerang.js
 
-    sudo node $SPLUNK_HOME/etc/apps/webperf/bin/server.js
+    sudo node $SPLUNK_HOME/etc/apps/webperf/bin/node/server.js
     Server running at http://127.0.0.1:7000
 
 *Note: You must run server.js as root or someone with privledges to write to /var/log/*
