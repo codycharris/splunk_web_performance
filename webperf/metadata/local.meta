@@ -12,28 +12,32 @@ version = 6.0
 modtime = 1382392587.925892000
 
 [views/overview]
+access = read : [ * ], write : [ admin, power ]
+export = none
 owner = admin
-version = 6.0
-modtime = 1385160180.924193000
+version = 6.2.0
+modtime = 1418838901.589556000
 
 [views/browser_overview]
+access = read : [ * ], write : [ admin ]
+export = none
 owner = admin
-version = 6.0
-modtime = 1385407261.409813000
+version = 6.1.0
+modtime = 1410819722.265672000
 
 [views/hist_perf_overview]
 access = read : [ * ], write : [ admin ]
 export = none
 owner = admin
-version = 6.0
-modtime = 1385170081.733828000
+version = 6.1.0
+modtime = 1402616594.716863000
 
 [views/rt_perf_overview]
 access = read : [ * ], write : [ admin ]
 export = none
 owner = admin
-version = 6.0
-modtime = 1385169221.094298000
+version = 6.1.0
+modtime = 1402522166.996239000
 
 [props/rum/EXTRACT-host]
 access = read : [ * ]
@@ -62,15 +66,15 @@ version = 6.0
 modtime = 1385144897.715085000
 
 [nav/default]
-version = 6.0
-modtime = 1385148868.094340000
+version = 6.1.0
+modtime = 1410820280.106216000
 
 [views/geo_performance]
 access = read : [ * ]
 export = none
 owner = admin
-version = 6.0
-modtime = 1385170570.235197000
+version = 6.2.0
+modtime = 1418839027.998616000
 
 [savedsearches/Page%20Load%20Time%20in%20Buckets]
 access = read : [ * ]
@@ -83,5 +87,68 @@ modtime = 1385408750.925501000
 access = read : [ * ]
 export = none
 owner = admin
-version = 6.0
-modtime = 1385408707.683534000
+version = 6.1.0
+modtime = 1402527758.691722000
+
+[inputs/monitor%3A%2F%2F%24SPLUNK_HOME%2Fetc%2Fapps%2Fwebperf%2Fbin%2Fnode%2Flogs]
+owner = admin
+version = 6.1.0
+modtime = 1401824190.095704000
+
+[]
+access = read : [ * ], write : [ admin, power ]
+export = system
+version = 6.1.0
+modtime = 1401826386.614568000
+
+[datamodels/Web_Performance]
+access = read : [ * ], write : [ admin ]
+export = none
+owner = admin
+version = 6.1.0
+modtime = 1410819823.255791000
+
+[models/Web_Performance]
+access = read : [ * ], write : [ admin ]
+export = none
+owner = admin
+version = 6.1.0
+modtime = 1410819823.263075000
+
+[savedsearches/Hosts]
+export = none
+owner = admin
+version = 6.1.0
+modtime = 1402527789.413856000
+
+[savedsearches/Avg%20DNS%20-%20Yesterday]
+access = read : [ * ], write : [ admin ]
+export = none
+owner = admin
+version = 6.1.0
+modtime = 1402527770.519406000
+
+[views/performance_stats]
+export = none
+owner = admin
+version = 6.1.0
+modtime = 1402527708.389091000
+
+[views/content_overview]
+owner = admin
+version = 6.1.0
+modtime = 1402530182.182639000
+
+[savedsearches/Geo%20-%20Slowest%20Countries%20%28Page%20Ready%29]
+access = read : [ * ]
+export = none
+owner = admin
+version = 6.1.0
+modtime = 1410820136.497552000
+
+[savedsearches/Events%20by%20%20Domain%20%28All%20TIme%29]
+access = read : [ * ], write : [ admin ]
+export = none
+owner = admin
+version = 6.1.0
+modtime = 1410820155.090866000

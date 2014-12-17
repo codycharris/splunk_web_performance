@@ -12,19 +12,19 @@
         <option name="changeField">change</option>
         <option name="changeFieldType">percent</option>
         <option name="drilldown">none</option>
-        <option name="beforeLabel">Count</option>
       </single>
     </panel>
     <panel>
       <single>
-        <title>Events Captured Per Second</title>
-        <searchPostProcess>| eval eps = round(events/24/6060, 2) | fields eps</searchPostProcess>
+        <title>Events Captured Per Second (Avg.)</title>
+        <searchPostProcess>sourcetype="rum" | stats count AS events| eval eps = round(events/24/6060, 2) | fields eps</searchPostProcess>
+        <earliestTime>rt-24h</earliestTime>
+        <latestTime>rtnow</latestTime>
         <option name="linkView">search</option>
         <option name="afterLabel">EPS</option>
         <option name="changeField">change</option>
         <option name="changeFieldType">percent</option>
         <option name="drilldown">none</option>
-        <option name="beforeLabel">Average</option>
       </single>
     </panel>
   </row>
@@ -32,16 +32,14 @@
     <panel>
       <table>
         <title>Events by  Domain (All TIme)</title>
-        <searchString>| pivot Web_Performance rum count(rum) AS "Count" SPLITROW u_host AS "Host" SORT 100 u_host</searchString>
-        <earliestTime>0</earliestTime>
-        <latestTime/>
+        <searchName>Events by  Domain (All TIme)</searchName>
         <option name="wrap">true</option>
         <option name="rowNumbers">false</option>
         <option name="dataOverlayMode">none</option>
         <option name="drilldown">row</option>
         <option name="count">10</option>
         <drilldown>
-          <link>/app/webperf/hist_perf_overview?form.uHost=$row.Domain$</link>
+          <link>/app/webperf/hist_perf_overview?form.uHost=$row.Host$</link>
         </drilldown>
       </table>
     </panel>

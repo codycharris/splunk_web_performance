@@ -106,8 +106,8 @@
         <default>avg</default>
       </input>
       <chart>
-        <title>Key Performance Metrics ($metric$)</title>
-        <searchString>sourcetype="rum" "ua_raw.os.family"=$osFamily$  | eval load= t_page/1000 | eval ready=t_done/1000 | eval ttfb=t_resp/1000 | eval dns=(nt_dns_end-nt_dns_st)/1000 |  timechart $metric$(load),$metric$(ready),$metric$(ttfb),$metric$(dns) | rename $metric$(dns) as "DNS", $metric$(ttfb) as "First Byte", $metric$(ready) as "Doc Complete", $metric$(load) as "Load Time"</searchString>
+        <title>Key Performance Metrics ($metric$. seconds)</title>
+        <searchString>sourcetype="rum" "ua_raw.os.family"=*  | eval load= t_page/1000 | eval ready=t_done/1000 | eval ttfb=t_resp/1000 | eval dns=(nt_dns_end-nt_dns_st)/1000 |  timechart avg(load),avg(ready),avg(ttfb),avg(dns),count | rename avg(dns) as "DNS", avg(ttfb) as "First Byte", avg(ready) as "Doc Complete", avg(load) as "Load Time", count as "Traffic"</searchString>
         <earliestTime>$earliest$</earliestTime>
         <latestTime>$latest$</latestTime>
         <option name="charting.axisTitleX.visibility">visible</option>
@@ -128,10 +128,11 @@
         </drilldown>
         <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisMiddle</option>
         <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
-        <option name="charting.axisTitleY2.visibility">visible</option>
-        <option name="charting.axisY2.enabled">false</option>
-        <option name="charting.axisY2.scale">inherit</option>
         <option name="charting.axisTitleX.text">Time</option>
+        <option name="charting.chart.overlayFields">Traffic</option>
+        <option name="charting.axisY2.scale">inherit</option>
+        <option name="charting.axisY2.enabled">true</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
       </chart>
     </panel>
   </row>

@@ -77,12 +77,15 @@
         <option name="charting.layout.splitSeries">0</option>
         <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
         <option name="charting.legend.placement">right</option>
+        <option name="charting.axisLabelsY.majorUnit">10</option>
+        <option name="charting.axisTitleY.text">Milliseconds</option>
       </chart>
     </panel>
   </row>
   <row>
     <panel>
       <table>
+        <title>Browser KPIs in Milliseconds</title>
         <searchString>| pivot Web_Performance rum avg(t_page) AS "Average of Page Ready" median(t_page) AS "Median of Page Ready" avg(t_done) AS "Average of Page Load" median(t_done) AS "Median of Page Load" SPLITROW ua_raw.family AS "UA: Browser Family" FILTER u_host is "$uHost$" FILTER ua_raw.os.family is "$osFamily$" SORT 100 ua_raw.family</searchString>
         <earliestTime>0</earliestTime>
         <latestTime/>

@@ -9,6 +9,8 @@
   <collection label="Reports">
 	<saved name="Dom Complete in Buckets" />
 	<saved name="Page Load Time in Buckets" />
+    <divider/>
+    <saved name="Geo - Slowest Countries (Page Ready)" />
   </collection>
   <view name="data_models" />
   <view name="search" />

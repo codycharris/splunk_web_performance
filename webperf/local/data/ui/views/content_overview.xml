@@ -1,0 +1,13 @@
+<dashboard>
+  <label>Content Overview</label>
+  <row>
+    <panel>
+      <table>
+        <title>Top 10 Slowest Pages</title>
+        <searchString>| pivot Web_Performance rum avg(t_done) AS "Average of Page Load" SPLITROW u AS URL SORT 10 u ROWSUMMARY 0 COLSUMMARY 0 NUMCOLS 0 SHOWOTHER 1</searchString>
+        <earliestTime>0</earliestTime>
+        <latestTime/>
+      </table>
+    </panel>
+  </row>
+</dashboard>

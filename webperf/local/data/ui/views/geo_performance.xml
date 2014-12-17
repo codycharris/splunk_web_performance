@@ -40,22 +40,35 @@
     </input>
   </fieldset>
   <row>
-    <map>
-      <title>TTFB, Page Ready, and Page Load ($metric$)</title>
-      <searchString>sourcetype="rum" | iplocation clientip| geostats latfield=lat longfield=lon $metric$(t_resp),$metric$(t_page),$metric$(t_done) | rename $metric$(t_resp) as "TTFB", $metric$(t_page) as "Page Ready", $metric$(t_done) as "Page Load"</searchString>
-      <earliestTime>$earliest$</earliestTime>
-      <latestTime>$latest$</latestTime>
-      <option name="height">400px</option>
-      <option name="mapping.seriesColors">[0x5379af,0x9ac23c,0xf7902b,0x956d95,0x6ab7c7,0xd85d3c,0xfac51c,0xdd86af]</option>
-      <option name="mapping.markerLayer.markerOpacity">0.8</option>
-      <option name="mapping.markerLayer.markerMinSize">10</option>
-      <option name="mapping.markerLayer.markerMaxSize">60</option>
-      <option name="mapping.map.center">(30.810646,-10.556976)</option>
-      <option name="mapping.map.zoom">2</option>
-      <option name="mapping.data.maxClusters">100</option>
-      <option name="mapping.tileLayer.maxZoom">7</option>
-      <option name="mapping.tileLayer.minZoom">0</option>
-      <option name="drilldown">all</option>
-    </map>
+    <panel>
+      <map>
+        <title>TTFB, Page Ready, and Page Load ($metric$)</title>
+        <searchString>sourcetype="rum" | iplocation clientip| geostats latfield=lat longfield=lon $metric$(t_resp),$metric$(t_page),$metric$(t_done) | rename $metric$(t_resp) as "TTFB", $metric$(t_page) as "Page Ready", $metric$(t_done) as "Page Load"</searchString>
+        <earliestTime>$earliest$</earliestTime>
+        <latestTime>$latest$</latestTime>
+        <option name="height">400px</option>
+        <option name="mapping.seriesColors">[0x5379af,0x9ac23c,0xf7902b,0x956d95,0x6ab7c7,0xd85d3c,0xfac51c,0xdd86af]</option>
+        <option name="mapping.markerLayer.markerOpacity">0.8</option>
+        <option name="mapping.markerLayer.markerMinSize">10</option>
+        <option name="mapping.markerLayer.markerMaxSize">60</option>
+        <option name="mapping.map.center">(30.810646,-10.556976)</option>
+        <option name="mapping.map.zoom">2</option>
+        <option name="mapping.data.maxClusters">100</option>
+        <option name="mapping.tileLayer.maxZoom">7</option>
+        <option name="mapping.tileLayer.minZoom">0</option>
+        <option name="drilldown">all</option>
+      </map>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
+        <title>Geo - Slowest Countries (Page Ready)</title>
+        <search ref="Geo - Slowest Countries (Page Ready)"></search>
+        <option name="wrap">undefined</option>
+        <option name="rowNumbers">undefined</option>
+        <option name="drilldown">row</option>
+      </table>
+    </panel>
   </row>
 </form>
